@@ -1,5 +1,3 @@
-include/
 lib/
 *.o
 test/testall
-
