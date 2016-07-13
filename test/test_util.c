@@ -26,7 +26,26 @@ int test_util() {
     return 0;
 }
 
+char* join(const char* a, const char* b) {
+    size_t alen = strlen(a);
+    size_t blen = strlen(b);
+    char* new = (char*) malloc(1 + alen + blen);
+    if (!new) {
+        return NULL;
+    }
+
+    strcpy(new, a);
+    strcpy(new+alen, b);
+
+    return new;
+}
+
 int test_strdup(const char* prefix) {
+    char* where = join(prefix, " -> test_strdup");
+    if (!where) {
+        return 1;
+    }
+
     const char* tests[] = {
         "",
         "a",
@@ -42,21 +61,24 @@ int test_strdup(const char* prefix) {
         input = tests[i];
         obtained = strdup(input);
         if (obtained == input) {
-            printf("%s/test_strdup: test %d failed\n", prefix, i);
+            printf("%s: test %d failed\n", where, i);
             printf("\tobtained and expected have the same mem address\n");
-            return 1;
+            free(where);
+            return 2;
         }
         if (strcmp(obtained, input) != 0) {
-            printf("%s/test_strdup: test %d failed\n", prefix, i);
+            printf("%s: test %d failed\n", where, i);
             printf("\texpected = \"%s\"\n", input);
             printf("\tobtained = \"%s\"\n", obtained);
             free(obtained);
-            return 2;
+            free(where);
+            return 3;
         }
 
         free(obtained);
     }
 
+    free(where);
     return 0;
 }
 
