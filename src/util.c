@@ -12,3 +12,9 @@ char* strdup(const char* s) {
 
     return strcpy(buf, s);
 }
+
+char* to_str(const int* a, int n) {
+    UNUSED(a);
+    UNUSED(n);
+    return strdup("{}");
+}
