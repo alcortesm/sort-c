@@ -17,34 +17,29 @@ int main(int argc, char** argv) {
     return test_util();
 }
 
-typedef struct {
-    char* input;
-    char* expected;
-} test;
-
 int test_util() {
-    test tests[] = {
-        {"", ""},
-        {"a", "a"},
-        {"ab", "ab"},
-        {"abcdefghijklmnopq", "abcdefghijklmnopq"},
+    const char* tests[] = {
+        "",
+        "a",
+        "ab",
+        "abcdefghijklmnopq",
     };
-    int ntests = sizeof(tests) / sizeof(test);
+    int ntests = sizeof(tests) / sizeof(char*);
 
     int i;
-    test t;
+    const char* input;
     char* obtained;
     for (i=0; i<ntests; i++) {
-        t = tests[i];
-        obtained = strdup(t.input);
-        if (obtained == t.input) {
+        input = tests[i];
+        obtained = strdup(input);
+        if (obtained == input) {
             printf("util_test: test %d failed\n", i);
             printf("\tobtained and expected have the same mem address\n");
             return 1;
         }
-        if (strcmp(obtained, t.expected) != 0) {
+        if (strcmp(obtained, input) != 0) {
             printf("util_test: test %d failed\n", i);
-            printf("\texpected = \"%s\"\n", t.expected);
+            printf("\texpected = \"%s\"\n", input);
             printf("\tobtained = \"%s\"\n", obtained);
             free(obtained);
             return 2;
