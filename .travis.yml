@@ -12,5 +12,5 @@ script:
   - make test
 
 after_success:
-  - gcov src/util.gcno
+  - gcov -pb /home/travis/build/alcortesm/sort-c/src/util.gcno
   - bash <(curl -s https://codecov.io/bash)
