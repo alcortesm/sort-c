@@ -7,12 +7,10 @@ before_install:
 install:
   - sudo apt-get install -qq gcc-4.8
   - export CC="gcc-4.8"
-  - sudo apt-get install tree
 
 script:
   - make test
 
 after_success:
-  - pwd
-  - tree
+  - gcov src/util.gcno
   - bash <(curl -s https://codecov.io/bash)
