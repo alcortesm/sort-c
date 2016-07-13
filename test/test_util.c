@@ -4,9 +4,29 @@
 
 #include <util.h>
 
-#include "test_util.h"
+#include "test.h"
+
+int test_strdup(const char*);
 
 int test_util() {
+    test_fn tests[] = {
+        test_strdup,
+    };
+    int ntests = sizeof(tests)/sizeof(test_fn);
+
+    int i;
+    int fail;
+    for (i=0; i<ntests; i++) {
+        fail = tests[i]("test_util");
+        if (fail) {
+            return fail;
+        }
+    }
+
+    return 0;
+}
+
+int test_strdup(const char* prefix) {
     const char* tests[] = {
         "",
         "a",
@@ -22,12 +42,12 @@ int test_util() {
         input = tests[i];
         obtained = strdup(input);
         if (obtained == input) {
-            printf("util_test: test %d failed\n", i);
+            printf("%s/test_strdup: test %d failed\n", prefix, i);
             printf("\tobtained and expected have the same mem address\n");
             return 1;
         }
         if (strcmp(obtained, input) != 0) {
-            printf("util_test: test %d failed\n", i);
+            printf("%s/test_strdup: test %d failed\n", prefix, i);
             printf("\texpected = \"%s\"\n", input);
             printf("\tobtained = \"%s\"\n", obtained);
             free(obtained);
