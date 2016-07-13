@@ -7,11 +7,7 @@ LIB=$(LIBDIR)libsort.a
 SRCS=$(addprefix $(SRCDIR), util.c)
 OBJS=$(SRCS:.c=.o)
 
-ifdef CXX
-	CC=$(CXX)
-else
-	CC=gcc
-endif
+CC?=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99
 INCLUDE=-iquote include/
 
