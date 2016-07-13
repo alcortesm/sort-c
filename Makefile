@@ -12,7 +12,7 @@ CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99
 INCLUDE=-iquote include/
 
 AR=ar
-AFLAGS=-cvq
+AFLAGS=-cvr
 
 .PHONY: clean test nuke
 
