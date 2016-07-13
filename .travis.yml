@@ -13,5 +13,5 @@ script:
 
 after_success:
   - pwd
-  - ls
+  - tree
   - bash <(curl -s https://codecov.io/bash)
