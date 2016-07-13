@@ -14,7 +14,7 @@ INCLUDE=-iquote include/
 AR=ar
 AFLAGS=-cvr
 
-.PHONY: clean test nuke
+.PHONY: clean nuke test
 
 $(LIB): $(OBJS) | $(LIBDIR)
 	$(AR) $(AFLAGS) $@ $<
@@ -37,4 +37,3 @@ clean:
 
 nuke: clean
 	rm -rf $(LIBDIR)
-
