@@ -6,6 +6,6 @@ before_install:
 
 install:
     - sudo apt-get install -qq gcc-4.8
-    - export CXX="gcc-4.8"
+    - export CC="gcc-4.8"
 
 script: make test
