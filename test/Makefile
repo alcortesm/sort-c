@@ -7,7 +7,11 @@ INCDIR=../include
 OBJS=$(SRCS:.c=.o)
 LIBPATH=$(LIBDIR)lib$(LIB).a
 
-CC=gcc
+ifdef CXX
+	CC=$(CXX)
+else
+	CC=gcc
+endif
 CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99
 IFLAGS=-I ../include/
 LFLAGS=-L $(LIBDIR) -l $(LIB)
