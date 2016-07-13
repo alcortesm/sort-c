@@ -33,6 +33,7 @@ clean:
 	rm -f $(OBJS)
 	rm -f $(SRCDIR)*.gcda
 	rm -f $(SRCDIR)*.gcno
+	rm -f *.gcov
 	cd $(TESTDIR) ; make clean
 
 nuke: clean
