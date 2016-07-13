@@ -9,8 +9,8 @@ LIBPATH=$(LIBDIR)lib$(LIB).a
 
 CC=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99
-INCLUDE=-I ../include/
-LFLAGS=-L $(LIBDIR) -l $(LIB) -I $(INCDIR)
+IFLAGS=-I ../include/
+LFLAGS=-L $(LIBDIR) -l $(LIB)
 DEBUG=-g
 
 .PHONY: clean test $(LIBPATH)
@@ -19,10 +19,10 @@ test: $(BIN) $(LIBPATH)
 	valgrind -q ./$(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) -o $@ $(FLAGS) $^
+	$(CC) -o $@ $(FLAGS) $^ $(IFLAGS) $(LFLAGS)
 
 .c.o:
-	$(CC) $(CFLAGS) $(LFLAGS) $(DEBUG) -c -o $@ $<
+	$(CC) $(CFLAGS) $(DEBUG) $(IFLAGS) $(LFLAGS) -c -o $@ $<
 
 clean:
 	rm -rf $(OBJS)
