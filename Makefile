@@ -1,20 +1,21 @@
+LIBNAME=sort
 SRCFILES=util.c
-
 SRCDIR=src/
-OBJDIR=obj/
 INCDIR=include/
-LIBDIR=lib/
 TESTDIR=test/
 
-LIB=$(LIBDIR)libsort.a
+OBJDIR=obj/
+LIBDIR=lib/
+
+LIB=$(LIBDIR)lib$(LIBNAME).a
 SRCS=$(addprefix $(SRCDIR), $(SRCFILES))
 OBJS=$(addprefix $(OBJDIR), $(SRCFILES:.c=.o))
 
 CC?=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99 --coverage
-INCLUDE=-iquote include/
+INCLUDE=-iquote $(INCDIR)
 
-AR=ar
+AR?=ar
 AFLAGS=-cvr
 
 .PHONY: clean nuke test
@@ -23,7 +24,7 @@ $(LIB): $(OBJS) | $(LIBDIR)
 	$(AR) $(AFLAGS) $@ $^
 
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCLUDE) $(DEBUG) -c -o $@ $<
+	$(CC) -c $(CFLAGS) $(INCLUDE) -o $@ $<
 
 $(LIBDIR):
 	mkdir $(LIBDIR)
