@@ -27,7 +27,6 @@ $(LIBDIR):
 
 test: $(LIB)
 	cd $(TESTDIR) ; make test
-	gcov src/util.c
 
 clean:
 	rm -f $(OBJS)

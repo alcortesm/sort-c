@@ -8,7 +8,7 @@ OBJS=$(SRCS:.c=.o)
 LIBPATH=$(LIBDIR)lib$(LIB).a
 
 CC?=gcc
-CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99 --coverage
+CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99
 IFLAGS=-I ../include/
 LFLAGS=-L $(LIBDIR) -l $(LIB) --coverage
 DEBUG=-g
@@ -30,5 +30,3 @@ $(BIN): $(OBJS)
 clean:
 	rm -f $(OBJS)
 	rm -f $(BIN)
-	rm -f *.gcno
-	rm -f *.gcda
