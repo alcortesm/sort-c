@@ -12,4 +12,6 @@ script:
   - make test
 
 after_success:
+  - pwd
+  - ls
   - bash <(curl -s https://codecov.io/bash)
