@@ -16,9 +16,6 @@ AFLAGS=-cvr
 
 .PHONY: clean test nuke
 
-test: $(LIB)
-	cd $(TESTDIR) ; make test
-
 $(LIB): $(OBJS) | $(LIBDIR)
 	$(AR) $(AFLAGS) $@ $<
 
@@ -27,6 +24,9 @@ $(LIB): $(OBJS) | $(LIBDIR)
 
 $(LIBDIR):
 	mkdir $(LIBDIR)
+
+test: $(LIB)
+	cd $(TESTDIR) ; make test
 
 clean:
 	rm -rf $(OBJS)
