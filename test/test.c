@@ -8,11 +8,13 @@
 #define UNUSED(x) (void)(x)
 #endif
 
+int test_util();
+
 int main(int argc, char** argv) {
     UNUSED(argc);
     UNUSED(argv);
 
-    return util_test();
+    return test_util();
 }
 
 typedef struct {
@@ -20,7 +22,7 @@ typedef struct {
     char* expected;
 } test;
 
-int util_test() {
+int test_util() {
     test tests[] = {
         {"", ""},
         {"a", "a"},
