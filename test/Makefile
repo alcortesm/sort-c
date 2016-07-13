@@ -17,9 +17,12 @@ IFLAGS=-I ../include/
 LFLAGS=-L $(LIBDIR) -l $(LIB)
 DEBUG=-g
 
-.PHONY: clean test $(LIBPATH)
+.PHONY: clean test valgrind $(LIBPATH)
 
 test: $(BIN) $(LIBPATH)
+	./$(BIN)
+
+valgrind: $(BIN) $(LIBPATH)
 	valgrind -q ./$(BIN)
 
 $(BIN): $(OBJS)
