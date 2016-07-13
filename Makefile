@@ -1,65 +1,65 @@
-LIBNAME=sort
-SRCFILES=util.c
-SRCDIR=src/
-INCDIR=include/
-TESTDIR=test/
-DEBUGDIR=debug/
+LIB_NAME=sort
+SRC_FILES=util.c
+SRC_DIR=src/
+INC_DIR=include/
+TEST_DIR=test/
+DEBUG_DIR=debug/
 
-OBJDIR=obj/
-DEBUGOBJDIR=$(DEBUGDIR)obj/
-LIBDIR=lib/
-DEBUGLIBDIR=$(DEBUGDIR)lib/
+OBJ_DIR=obj/
+DEBUG_OBJ_DIR=$(DEBUG_DIR)obj/
+LIB_DIR=lib/
+DEBUG_LIB_DIR=$(DEBUG_DIR)lib/
 
-LIB=$(LIBDIR)lib$(LIBNAME).a
-DEBUGLIB=$(DEBUGLIBDIR)lib$(LIBNAME).a
+LIB=$(LIB_DIR)lib$(LIB_NAME).a
+DEBUG_LIB=$(DEBUG_LIB_DIR)lib$(LIB_NAME).a
 
-SRCS=$(addprefix $(SRCDIR), $(SRCFILES))
-OBJS=$(addprefix $(OBJDIR), $(SRCFILES:.c=.o))
-DEBUGOBJS=$(addprefix $(DEBUGOBJDIR), $(SRCFILES:.c=.o))
+SRCS=$(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJS=$(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
+DEBUG_OBJS=$(addprefix $(DEBUG_OBJ_DIR), $(SRC_FILES:.c=.o))
 
 CC?=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99 -O3
-DEBUGCFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99 -Og -g --coverage
-INCLUDE=-iquote $(INCDIR)
+DEBUG_CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99 -Og -g --coverage
+INCLUDE=-iquote $(INC_DIR)
 
 AR?=ar
 AFLAGS=-cvr
 
 .PHONY: clean nuke test
 
-$(LIB): $(OBJS) | $(LIBDIR)
+$(LIB): $(OBJS) | $(LIB_DIR)
 	$(AR) $(AFLAGS) $@ $^
 
-$(OBJDIR)%.o: $(SRCDIR)%.c | $(OBJDIR)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 	$(CC) -c $(CFLAGS) $(INCLUDE) -o $@ $<
 
-$(LIBDIR):
-	mkdir $(LIBDIR)
+$(LIB_DIR):
+	mkdir $(LIB_DIR)
 
-$(OBJDIR):
-	mkdir $(OBJDIR)
+$(OBJ_DIR):
+	mkdir $(OBJ_DIR)
 
-$(DEBUGLIB): $(DEBUGOBJS) | $(DEBUGLIBDIR)
+$(DEBUG_LIB): $(DEBUG_OBJS) | $(DEBUG_LIB_DIR)
 	$(AR) $(AFLAGS) $@ $^
 
-$(DEBUGOBJDIR)%.o: $(SRCDIR)%.c | $(DEBUGOBJDIR)
-	$(CC) -c $(DEBUGCFLAGS) $(INCLUDE) -o $@ $<
+$(DEBUG_OBJ_DIR)%.o: $(SRC_DIR)%.c | $(DEBUG_OBJ_DIR)
+	$(CC) -c $(DEBUG_CFLAGS) $(INCLUDE) -o $@ $<
 
-$(DEBUGLIBDIR):
-	mkdir -p $(DEBUGLIBDIR)
+$(DEBUG_LIB_DIR):
+	mkdir -p $(DEBUG_LIB_DIR)
 
-$(DEBUGOBJDIR):
-	mkdir -p $(DEBUGOBJDIR)
+$(DEBUG_OBJ_DIR):
+	mkdir -p $(DEBUG_OBJ_DIR)
 
-test: $(DEBUGLIB)
-	cd $(TESTDIR) ; make test
+test: $(DEBUG_LIB)
+	cd $(TEST_DIR) ; make test
 
 clean:
-	rm -rf $(OBJDIR)
-	rm -rf $(DEBUGOBJDIR)
-	rm -rf $(DEBUGLIBDIR)
+	rm -rf $(OBJ_DIR)
+	rm -rf $(DEBUG_OBJ_DIR)
+	rm -rf $(DEBUG_LIB_DIR)
 	rm -f *.gcov
-	cd $(TESTDIR) ; make clean
+	cd $(TEST_DIR) ; make clean
 
 nuke: clean
-	rm -rf $(LIBDIR)
+	rm -rf $(LIB_DIR)
