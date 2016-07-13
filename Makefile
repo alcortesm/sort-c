@@ -8,7 +8,7 @@ SRCS=$(addprefix $(SRCDIR), util.c)
 OBJS=$(SRCS:.c=.o)
 
 CC?=gcc
-CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99
+CFLAGS=-Wall -Wextra -Wpedantic -Werror -std=c99 --coverage
 INCLUDE=-iquote include/
 
 AR=ar
@@ -29,7 +29,9 @@ test: $(LIB)
 	cd $(TESTDIR) ; make test
 
 clean:
-	rm -rf $(OBJS)
+	rm -f $(OBJS)
+	rm -f $(SRCDIR)*.gcda
+	rm -f $(SRCDIR)*.gcno
 	cd $(TESTDIR) ; make clean
 
 nuke: clean
