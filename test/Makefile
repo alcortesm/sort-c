@@ -13,16 +13,16 @@ IFLAGS=-I ../include/
 LFLAGS=-L $(LIBDIR) -l $(LIB) --coverage
 DEBUG=-g
 
-.PHONY: clean test valgrind $(LIBPATH)
+.PHONY: clean test valgrind
 
-test: $(BIN) $(LIBPATH)
+test: $(BIN)
 	./$(BIN)
 
 valgrind: $(BIN) $(LIBPATH)
-	valgrind -q ./$(BIN)
+	valgrind --leak-check=full ./$(BIN)
 
-$(BIN): $(OBJS)
-	$(CC) -o $@ $^ $(LFLAGS)
+$(BIN): $(OBJS) $(LIBPATH)
+	$(CC) -o $@ $(OBJS) $(LFLAGS)
 
 .c.o:
 	$(CC) $(CFLAGS) $(DEBUG) $(IFLAGS) -c -o $@ $<

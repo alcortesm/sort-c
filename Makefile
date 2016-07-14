@@ -25,7 +25,7 @@ INCLUDE=-iquote $(INC_DIR)
 AR?=ar
 AFLAGS=-cvr
 
-.PHONY: clean nuke test
+.PHONY: clean nuke test valgrind
 
 $(LIB): $(OBJS) | $(LIB_DIR)
 	$(AR) $(AFLAGS) $@ $^
@@ -53,6 +53,9 @@ $(DEBUG_OBJ_DIR):
 
 test: $(DEBUG_LIB)
 	cd $(TEST_DIR) ; make test
+
+valgrind: $(DEBUG_LIB)
+	cd $(TEST_DIR) ; make valgrind
 
 clean:
 	rm -rf $(OBJ_DIR)
