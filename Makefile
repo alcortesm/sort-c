@@ -1,5 +1,5 @@
 LIB_NAME=sort
-SRC_FILES=util.c
+SRC_FILES=util.c bubble.c
 SRC_DIR=src/
 INC_DIR=include/
 TEST_DIR=test/
@@ -59,8 +59,7 @@ valgrind: $(DEBUG_LIB)
 
 clean:
 	rm -rf $(OBJ_DIR)
-	rm -rf $(DEBUG_OBJ_DIR)
-	rm -rf $(DEBUG_LIB_DIR)
+	rm -rf $(DEBUG_DIR)
 	rm -f *.gcov
 	cd $(TEST_DIR) ; make clean
 
