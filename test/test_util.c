@@ -10,7 +10,9 @@ int test_strjoin(const char*);
 int test_strdup(const char*);
 int test_to_str(const char*);
 
-int test_util() {
+int test_util(const char* prefix) {
+    UNUSED(prefix);
+
     test_fn tests[] = {
         test_strdup,
         test_strjoin,
