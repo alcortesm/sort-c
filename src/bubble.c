@@ -1,8 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-
-#include "util.h"
-
 void swap(int*a, int i, int j) {
     int tmp = a[i];
     a[i] = a[j];
@@ -10,8 +5,8 @@ void swap(int*a, int i, int j) {
 }
 
 int* sort_bubble(int* a, int n) {
-    if (a == NULL || n == 0) {
-        return NULL;
+    if (!a || n == 0) {
+        return 0;
     }
 
     if (n == 1) {
