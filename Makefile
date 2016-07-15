@@ -1,5 +1,5 @@
 LIB_NAME=sort
-SRC_FILES=util.c bubble.c
+SRC_FILES=bubble.c
 SRC_DIR=src/
 INC_DIR=include/
 TEST_DIR=test/

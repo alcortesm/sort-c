@@ -6,7 +6,6 @@
 
 #include "util.h"
 
-
 typedef struct {
     int* a;
     int n;

@@ -1,5 +1,5 @@
 BIN=testall
-SRCS=test.c test_util.c test_sort.c
+SRCS=test.c util.c test_util.c test_sort.c
 LIBDIR=../debug/lib/
 LIB=sort
 INCDIR=../include
