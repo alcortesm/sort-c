@@ -59,8 +59,7 @@ valgrind: $(DEBUG_LIB)
 
 clean:
 	rm -rf $(OBJ_DIR)
-	rm -rf $(DEBUG_OBJ_DIR)
-	rm -rf $(DEBUG_LIB_DIR)
+	rm -rf $(DEBUG_DIR)
 	rm -f *.gcov
 	cd $(TEST_DIR) ; make clean
 
