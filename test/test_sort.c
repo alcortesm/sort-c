@@ -3,8 +3,7 @@
 #include <string.h>
 
 #include <sort.h>
-
-#include "util.h"
+#include <util.h>
 
 typedef struct {
     int* a;

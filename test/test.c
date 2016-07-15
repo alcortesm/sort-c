@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
-#include "util.h"
+#include <util.h>
+
 #include "test.h"
 #include "test_util.h"
 #include "test_sort.h"
