@@ -19,17 +19,21 @@ int* sort_bubble(int* a, int n) {
     }
 
     int limit;
+    int sorted_since;
     for (limit=n; limit>1; limit--) {
+        sorted_since = -1;
         int i;
         for (i=1; i<limit; i++) {
-            char* s = to_str(a, n);
-            printf("i=%d limit=%d array=%s\n", i, limit, s);
-            free(s);
-
             if (a[i] < a[i-1]) {
                 swap(a, i, i-1);
-                printf("    swap %d and %d\n", a[i], a[i-1]);
+                sorted_since = -1;
+            } else if (sorted_since == -1) {
+                sorted_since = i-1;
             }
+        }
+
+        if (sorted_since != -1) {
+            limit = sorted_since + 1; // +1 to account for the outer loop afterthought
         }
     }
 
