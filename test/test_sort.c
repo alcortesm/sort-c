@@ -12,7 +12,7 @@ typedef struct {
 
 array* array_new(int* a, int n);
 array* array_clone(array* a);
-void array_free(array* a);
+void   array_free(array* a);
 
 int test_sort_fn(sort_fn fn, const char* prefix);
 int is_sorted(int* a, int n);
@@ -941,6 +941,11 @@ int test_sort_fn(sort_fn fn, const char* prefix) {
             return 1;
         }
 
+        printf("testing \"%s\": test %d:\n", prefix, i);
+        char* ss = to_str(input->a, input->n);
+        printf("\t\t   input: %s\n", ss);
+        free(ss);
+
         obtained = fn(input->a, input->n);
         if (!is_sorted(obtained, input->n)) {
             printf("testing \"%s\": test %d failed:\n", prefix, i);
@@ -958,6 +963,10 @@ int test_sort_fn(sort_fn fn, const char* prefix) {
             array_free(input);
             return 2;
         }
+
+        char* s = to_str(obtained, input->n);
+        printf("\t\tobtained: %s\n", s);
+        free(s);
 
         array_free(backup);
         array_free(input);
