@@ -10,9 +10,11 @@ typedef struct {
     int n;
 } array;
 
-array* array_new(array* a);
+array* array_new(int* a, int n);
+array* array_clone(array* a);
 void array_free(array* a);
 
+int test_sort_fn(sort_fn fn, const char* prefix);
 int is_sorted(int* a, int n);
 
 array tests[] = {
@@ -898,58 +900,93 @@ array tests[] = {
 int test_sort(const char* prefix) {
     UNUSED(prefix);
 
+    struct namedFunc {
+        char* name;
+        sort_fn fn;
+    };
+
+    struct namedFunc fns[] = {
+        {"sort_bubble", sort_bubble},
+        {"sort_merge_nspace", sort_merge_nspace},
+    };
+    int nfns = sizeof(fns) / sizeof(struct namedFunc);
+
+    int i;
+    int fail;
+    for (i=0; i<nfns; i++) {
+        fail = test_sort_fn(fns[i].fn, fns[i].name);
+        if (fail) {
+            return fail;
+        }
+    }
+
+    return 0;
+}
+
+int test_sort_fn(sort_fn fn, const char* prefix) {
     int ntests = sizeof(tests) / sizeof(array);
 
     int i;
-    array input, *backup;
+    array *input, *backup;
     int* obtained;
     for (i=0; i<ntests; i++) {
-        input = tests[i];
-        backup = array_new(&input);
-        if (! backup) {
+        input = array_clone(&tests[i]);
+        if (! input) {
             return 1;
         }
 
-        obtained = sort_bubble(input.a, input.n);
-        if (!is_sorted(obtained, input.n)) {
-            printf("test_sort -> sort_bubble: test %d failed:\n", i);
+        backup = array_clone(input);
+        if (! backup) {
+            array_free(input);
+            return 1;
+        }
+
+        obtained = fn(input->a, input->n);
+        if (!is_sorted(obtained, input->n)) {
+            printf("testing \"%s\": test %d failed:\n", prefix, i);
             printf("\tresult is not sorted:\n");
 
             char* s = to_str(backup->a, backup->n);
             printf("\t\t   input: %s\n", s);
             free(s);
 
-            s = to_str(obtained, input.n);
+            s = to_str(obtained, input->n);
             printf("\t\tobtained: %s\n", s);
             free(s);
 
             array_free(backup);
+            array_free(input);
             return 2;
         }
 
         array_free(backup);
+        array_free(input);
     }
 
     return 0;
 }
 
-array* array_new(array* a) {
+array* array_new(int* a, int n) {
     array* new = (array*) malloc(sizeof(array));
     if (! new) {
         return NULL;
     }
 
-    new->n = a->n;
+    new->n = n;
 
-    new->a = (int*) malloc(a->n * sizeof(int));
+    new->a = (int*) malloc(n * sizeof(int));
     if (! new->a) {
         free(new);
         return NULL;
     }
 
-    memcpy(new->a, a->a, a->n*sizeof(int));
+    memcpy(new->a, a, n*sizeof(int));
 
     return new;
+}
+
+array* array_clone(array* a) {
+    return array_new(a->a, a->n);
 }
 
 void array_free(array* a) {
