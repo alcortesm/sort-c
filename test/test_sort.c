@@ -907,7 +907,7 @@ int test_sort(const char* prefix) {
 
     struct namedFunc fns[] = {
         {"sort_bubble", sort_bubble},
-        {"sort_merge_nspace", sort_merge_nspace},
+    //    {"sort_merge_nspace", sort_merge_nspace},
     };
     int nfns = sizeof(fns) / sizeof(struct namedFunc);
 
