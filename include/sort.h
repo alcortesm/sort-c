@@ -1,9 +1,8 @@
 #ifndef SORT_H
 #define SORT_H
 
-typedef int* (*sort_fn)(int*, int);
-
-int* sort_bubble(int*, int);
-int* sort_merge_nspace(int*, int);
+typedef void sort_fn(array*);
+sort_fn sort_bubble;
+sort_fn sort_merge_nspace;
 
 #endif /* SORT_H */

@@ -14,11 +14,11 @@ int test_sort(const char* prefix) {
 
     struct named_test {
         char* name;
-        sort_fn fn;
+        sort_fn* fn;
     };
 
     struct named_test tests[] = {
-        {"sort_bubble", sort_bubble},
+        {"sort_bubble", &sort_bubble},
     //    {"sort_merge_nspace", sort_merge_nspace},
     };
     int ntests = sizeof(tests) / sizeof(struct named_test);
@@ -922,18 +922,16 @@ int test_sort_fn(sort_fn fn, const char* prefix) {
     int ntests = sizeof(tests) / sizeof(fix);
 
     int i;
-    array *input;
-    int* obtained;
+    array *clone;
     for (i=0; i<ntests; i++) {
-        input = array_clone(&(tests[i].input));
-        if (! input) {
+        clone = array_clone(&(tests[i].input));
+        if (! clone) {
             return 1;
         }
 
-        obtained = fn(input->a, input->n);
-        array* obt = array_new(obtained, input->n);
+        fn(clone);
 
-        if (! array_equals(obt, &(tests[i].expected))) {
+        if (! array_equals(clone, &(tests[i].expected))) {
             printf("testing \"%s\": test %d failed:\n", prefix, i);
             printf("\tresult and expected differ:\n");
 
@@ -941,17 +939,15 @@ int test_sort_fn(sort_fn fn, const char* prefix) {
             printf("\t\t   input: %s\n", s);
             free(s);
 
-            s = array_to_str(obt);
+            s = array_to_str(clone);
             printf("\t\tobtained: %s\n", s);
             free(s);
 
-            array_free(obt);
-            array_free(input);
+            array_free(clone);
             return 2;
         }
 
-        array_free(obt);
-        array_free(input);
+        array_free(clone);
     }
 
     return 0;
