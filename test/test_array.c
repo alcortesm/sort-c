@@ -410,6 +410,10 @@ int test_array_clone(const char* prefix) {
     array* obtained;
     for (i=0; i<ntests; i++) {
         obtained = array_clone(tests+i);
+        if (! obtained) {
+            perror("array_clone");
+            exit(1);
+        }
 
         if (! array_equals(obtained, tests+i)) {
             char* s = comment(prefix, i);
@@ -430,8 +434,11 @@ int test_array_clone(const char* prefix) {
             printf("\t\t   clone: %s\n", s);
             free(s);
 
+            array_free(obtained);
             return 1;
         }
+
+        array_free(obtained);
     }
 
     return 0;
