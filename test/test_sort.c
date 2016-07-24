@@ -2,20 +2,38 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <sort.h>
 #include <util.h>
-
-typedef struct {
-    int* a;
-    int n;
-} array;
-
-array* array_new(int* a, int n);
-array* array_clone(array* a);
-void   array_free(array* a);
+#include <array.h>
+#include <sort.h>
 
 int test_sort_fn(sort_fn fn, const char* prefix);
 int is_sorted(int* a, int n);
+
+int test_sort(const char* prefix) {
+    UNUSED(prefix);
+
+    struct namedFunc {
+        char* name;
+        sort_fn fn;
+    };
+
+    struct namedFunc fns[] = {
+        {"sort_bubble", sort_bubble},
+    //    {"sort_merge_nspace", sort_merge_nspace},
+    };
+    int nfns = sizeof(fns) / sizeof(struct namedFunc);
+
+    int i;
+    int fail;
+    for (i=0; i<nfns; i++) {
+        fail = test_sort_fn(fns[i].fn, fns[i].name);
+        if (fail) {
+            return fail;
+        }
+    }
+
+    return 0;
+}
 
 array tests[] = {
     {NULL, 0},
@@ -897,32 +915,6 @@ array tests[] = {
              1001, 1002, 1003, 1004}, 40},
 };
 
-int test_sort(const char* prefix) {
-    UNUSED(prefix);
-
-    struct namedFunc {
-        char* name;
-        sort_fn fn;
-    };
-
-    struct namedFunc fns[] = {
-        {"sort_bubble", sort_bubble},
-    //    {"sort_merge_nspace", sort_merge_nspace},
-    };
-    int nfns = sizeof(fns) / sizeof(struct namedFunc);
-
-    int i;
-    int fail;
-    for (i=0; i<nfns; i++) {
-        fail = test_sort_fn(fns[i].fn, fns[i].name);
-        if (fail) {
-            return fail;
-        }
-    }
-
-    return 0;
-}
-
 int test_sort_fn(sort_fn fn, const char* prefix) {
     int ntests = sizeof(tests) / sizeof(array);
 
@@ -975,34 +967,6 @@ int test_sort_fn(sort_fn fn, const char* prefix) {
     return 0;
 }
 
-array* array_new(int* a, int n) {
-    array* new = (array*) malloc(sizeof(array));
-    if (! new) {
-        return NULL;
-    }
-
-    new->n = n;
-
-    new->a = (int*) malloc(n * sizeof(int));
-    if (! new->a) {
-        free(new);
-        return NULL;
-    }
-
-    memcpy(new->a, a, n*sizeof(int));
-
-    return new;
-}
-
-array* array_clone(array* a) {
-    return array_new(a->a, a->n);
-}
-
-void array_free(array* a) {
-    free(a->a);
-    free(a);
-}
-
 int is_sorted(int* a, int n) {
     if (a == NULL || n == 0) {
         return 1;
@@ -1017,4 +981,3 @@ int is_sorted(int* a, int n) {
 
     return 1;
 }
-

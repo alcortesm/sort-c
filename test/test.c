@@ -3,23 +3,27 @@
 #include <util.h>
 
 #include "test.h"
-#include "test_util.h"
-#include "test_sort.h"
 
 int main(int argc, char** argv) {
     UNUSED(argc);
     UNUSED(argv);
 
-    int fail;
-    test_fn tests[] = {
-        &test_util,
-        &test_sort,
+    struct named_test {
+        test_fn*    fn;
+        const char* name;
     };
-    int ntests = sizeof(tests) / sizeof(test_fn);
+
+    struct named_test tests[] = {
+        {&test_util, "test_util"},
+        {&test_array, "test_array"},
+        {&test_sort, "test_sort"},
+    };
+    int ntests = sizeof(tests) / sizeof(struct named_test);
 
     int i;
+    int fail;
     for (i=0; i<ntests; i++) {
-        fail =  tests[i](NULL);
+        fail =  tests[i].fn(tests[i].name);
         if (fail) {
             return fail;
         }

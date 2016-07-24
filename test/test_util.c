@@ -6,19 +6,19 @@
 
 #include "test.h"
 
-int test_strjoin(const char*);
-int test_strdup(const char*);
-int test_to_str(const char*);
+test_fn test_strjoin;
+test_fn test_strdup;
+test_fn test_to_str;
 
 int test_util(const char* prefix) {
     UNUSED(prefix);
 
-    test_fn tests[] = {
-        test_strdup,
-        test_strjoin,
-        test_to_str,
+    test_fn* tests[] = {
+        &test_strdup,
+        &test_strjoin,
+        &test_to_str,
     };
-    int ntests = sizeof(tests)/sizeof(test_fn);
+    int ntests = sizeof(tests)/sizeof(test_fn*);
 
     int i;
     int fail;
