@@ -38,24 +38,24 @@ void _sort_merge_nspace(int* tmp, int* src, int b, int e) {
 }
 
 void merge(int* tmp, int* src, int ab, int ae, int bb, int be) {
-    int* a = src+ab;
-    int* b = src+bb;
+    int* r1 = src+ab;
+    int* r2 = src+bb;
     int i = ab;
     for (;;) {
-        if (a >= src+ae) {
-            memcpy(tmp+i, b, (src+be-b)*sizeof(int));
+        if (r1 >= src+ae) {
+            memcpy(tmp+i, r2, (src+be-r2)*sizeof(int));
             break;
         }
-        if (b >= src+be) {
-            memcpy(tmp+i, a, (src+ae-a)*sizeof(int));
+        if (r2 >= src+be) {
+            memcpy(tmp+i, r1, (src+ae-r1)*sizeof(int));
             break;
         }
-        if (*a <= *b) {
-            tmp[i++] = *a;
-            a++;
+        if (*r1 <= *r2) {
+            tmp[i++] = *r1;
+            r1++;
         } else {
-            tmp[i++] = *b;
-            b++;
+            tmp[i++] = *r2;
+            r2++;
         }
     }
     memcpy(src+ab, tmp+ab, (be-ab)*sizeof(int));
