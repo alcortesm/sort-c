@@ -6,7 +6,7 @@
 #include "array.h"
 
 void _sort_merge_nspace(int* dst, int* src, int f, int n);
-void merge(int* dst, int* src, int a, int m, int d);
+void merge(int* dst, int* src, int b, int e);
 
 int sort_merge_nspace(array* a) {
     int sz = array_size(a);
@@ -34,7 +34,7 @@ void _sort_merge_nspace(int* tmp, int* src, int b, int e) {
 
     _sort_merge_nspace(tmp, src, b, b+sz/2);
     _sort_merge_nspace(tmp, src, b+sz/2, e);
-    merge(tmp, src, b, b+sz/2, e);
+    merge(tmp, src, b, e);
 }
 
 // merge rearranges the ints in the src array, from b up to, but not
@@ -47,7 +47,8 @@ void _sort_merge_nspace(int* tmp, int* src, int b, int e) {
 // into a temporal array, until both queues are empty.  Then the
 // contents of the temporal array are copied back into the original
 // array.
-void merge(int* tmp, int* src, int ab, int m, int be) {
+void merge(int* tmp, int* src, int ab, int be) {
+    int m = ab + ((be-ab) / 2);
     int* r1 = src+ab;
     int* r2 = src+m;
     int i = ab;
