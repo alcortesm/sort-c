@@ -5,8 +5,8 @@
 #include "util.h"
 #include "array.h"
 
-void _sort_merge_nspace(int* dst, int* src, int f, int n);
-void merge(int* dst, int* src, int b, int e);
+void split_and_merge(int* tmp, int* src, int begin, int end);
+void merge(int* tmp, int* src, int n);
 
 int sort_merge_nspace(array* a) {
     int sz = array_size(a);
@@ -20,41 +20,46 @@ int sort_merge_nspace(array* a) {
         return 1;
     }
 
-    _sort_merge_nspace(tmp, a->a, 0, sz);
+    split_and_merge(tmp, a->a, 0, sz);
+
     free(tmp);
 
     return 0;
 }
 
-void _sort_merge_nspace(int* tmp, int* src, int b, int e) {
+// sorts the numbers from src+b to src+e (not included) by splitting
+// the array in the middle, recursively sorting each part and merging
+// the two sorted parts into a single one.
+void split_and_merge(int* tmp, int* src, int b, int e) {
     int sz = e-b;
     if (sz==1) {
         return;
     }
 
-    _sort_merge_nspace(tmp, src, b, b+sz/2);
-    _sort_merge_nspace(tmp, src, b+sz/2, e);
-    merge(tmp, src, b, e);
+    int mid = b+sz/2;
+    split_and_merge(tmp, src, b, mid);
+    split_and_merge(tmp, src, mid, e);
+    merge(tmp+b, src+b, sz);
 }
 
-// merge rearranges the ints in the src array, from b up to, but not
-// including, e.
+// merge rearranges the first n elements of src.
 //
-// Think of the array as two imaginary queues, one from b to the middle
-// element and another from the middle element to e.
+// Think of src as two imaginary queues, one from the beginning of src
+// to its middle element and another from its middle element to the n-1
+// one.
 //
 // The smallest int from the head of each queue is dequeued and queued
-// into a temporal array, until both queues are empty.  Then the
-// contents of the temporal array are copied back into the original
-// array.
-void merge(int* tmp, int* src, int b, int e) {
-    int const sz = e-b;
-    int* const mid = src + b + sz/2; // middle position
-    int* const end = src + e;        // end position
+// into a temporal array, until both queues are empty.
+//
+// Then the contents of the temporal array are copied back into the
+// original array.
+void merge(int* tmp, int* src, int n) {
+    int* const mid = src + n/2;
+    int* const end = src + n;
 
-    int* h1 = src + b;   // head of first queue
-    int* h2 = mid;       // head of second queue
-    int* next = tmp + b; // next free place in the output queue
+    int* h1 = src;    // head of first queue
+    int* h2 = mid;    // head of second queue
+    int* next = tmp;  // next free place in the output queue
 
     for (;;) {
         if (h1 >= mid) {
@@ -75,5 +80,5 @@ void merge(int* tmp, int* src, int b, int e) {
         next++;
     }
 
-    memcpy(src+b, tmp+b, sz*sizeof(int));
+    memcpy(src, tmp, n*sizeof(int));
 }
