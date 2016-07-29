@@ -4,3 +4,4 @@ test/testall
 *.gcda
 *.gcno
 *.gcov
+debug/

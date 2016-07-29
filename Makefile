@@ -10,6 +10,8 @@ DEBUG_OBJ_DIR=$(DEBUG_DIR)obj/
 LIB_DIR=lib/
 DEBUG_LIB_DIR=$(DEBUG_DIR)lib/
 
+DEBUG_COV_DIR=$(DEBUG_DIR)cov/
+
 LIB=$(LIB_DIR)lib$(LIB_NAME).a
 DEBUG_LIB=$(DEBUG_LIB_DIR)lib$(LIB_NAME).a
 
@@ -51,6 +53,9 @@ $(DEBUG_LIB_DIR):
 $(DEBUG_OBJ_DIR):
 	mkdir -p $(DEBUG_OBJ_DIR)
 
+$(DEBUG_COV_DIR):
+	mkdir -p $(DEBUG_COV_DIR)
+
 test: $(DEBUG_LIB)
 	cd $(TEST_DIR) ; make test
 
@@ -65,3 +70,8 @@ clean:
 
 nuke: clean
 	rm -rf $(LIB_DIR)
+
+coverage: test | $(DEBUG_COV_DIR)
+	lcov --directory $(DEBUG_OBJ_DIR) --capture --output-file $(DEBUG_COV_DIR)cov.info
+	genhtml -o $(DEBUG_COV_DIR) $(DEBUG_COV_DIR)cov.info
+	@echo "See HTML coverage report at $(PWD)/$(DEBUG_COV_DIR)index.html"
