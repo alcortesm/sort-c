@@ -48,26 +48,32 @@ void _sort_merge_nspace(int* tmp, int* src, int b, int e) {
 // contents of the temporal array are copied back into the original
 // array.
 void merge(int* tmp, int* src, int b, int e) {
-    int m = b + (e-b)/2;
-    int* h1 = src+b;
-    int* h2 = src+m;
-    int next = tmp+b;
+    int const sz = e-b;
+    int* const mid = src + b + sz/2; // middle position
+    int* const end = src + e;        // end position
+
+    int* h1 = src + b;   // head of first queue
+    int* h2 = mid;       // head of second queue
+    int* next = tmp + b; // next free place in the output queue
+
     for (;;) {
-        if (h1 >= src+m) {
-            memcpy(next, h2, (src+e-h2)*sizeof(int));
+        if (h1 >= mid) {
+            memcpy(next, h2, (end-h2)*sizeof(int));
             break;
         }
-        if (h2 >= src+e) {
-            memcpy(next, h1, (src+m-h1)*sizeof(int));
+        if (h2 >= end) {
+            memcpy(next, h1, (mid-h1)*sizeof(int));
             break;
         }
         if (*h1 <= *h2) {
-            *next++ = *h1;
+            *next = *h1;
             h1++;
         } else {
-            *next++ = *h2;
+            *next = *h2;
             h2++;
         }
+        next++;
     }
-    memcpy(src+b, tmp+b, (e-b)*sizeof(int));
+
+    memcpy(src+b, tmp+b, sz*sizeof(int));
 }
