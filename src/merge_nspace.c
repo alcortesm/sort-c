@@ -5,7 +5,7 @@
 #include "util.h"
 #include "array.h"
 
-void split_and_merge(int* tmp, int* src, int begin, int end);
+void split_and_merge(int* tmp, int* src, int n);
 void merge(int* tmp, int* src, int n);
 
 int sort_merge_nspace(array* a) {
@@ -24,26 +24,28 @@ int sort_merge_nspace(array* a) {
         return 1;
     }
 
-    split_and_merge(tmp, a->a, 0, sz);
+    split_and_merge(tmp, a->a, sz);
 
     free(tmp);
 
     return 0;
 }
 
-// sorts the numbers from src+b to src+e (not included) by splitting
-// the array in the middle, recursively sorting each part and merging
-// the two sorted parts into a single one.
-void split_and_merge(int* tmp, int* src, int b, int e) {
-    int sz = e-b;
-    if (sz==1) {
+// sorts the first n elements of src by splitting the array at the
+// middle, recursively sorting each part and merging the two sorted
+// parts taking care to keep the result sorted.
+void split_and_merge(int* tmp, int* src, int n) {
+    if (n == 1) {
         return;
     }
 
-    int mid = b+sz/2;
-    split_and_merge(tmp, src, b, mid);
-    split_and_merge(tmp, src, mid, e);
-    merge(tmp+b, src+b, sz);
+    int first_half = n/2;
+    int last_half  = first_half + n%2;
+
+    split_and_merge(tmp, src,            first_half);
+    split_and_merge(tmp, src+first_half, last_half);
+
+    merge(tmp, src, n);
 }
 
 // merge rearranges the first n elements of src.
