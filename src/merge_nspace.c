@@ -9,6 +9,10 @@ void split_and_merge(int* tmp, int* src, int begin, int end);
 void merge(int* tmp, int* src, int n);
 
 int sort_merge_nspace(array* a) {
+    if (! a) {
+        return 1;
+    }
+
     int sz = array_size(a);
     if (sz<2) {
         return 0;
