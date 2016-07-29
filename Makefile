@@ -72,6 +72,6 @@ nuke: clean
 	rm -rf $(LIB_DIR)
 
 coverage: test | $(DEBUG_COV_DIR)
-	lcov --directory $(DEBUG_OBJ_DIR) --capture --output-file $(DEBUG_COV_DIR)cov.info
-	genhtml -o $(DEBUG_COV_DIR) $(DEBUG_COV_DIR)cov.info
+	lcov --directory $(DEBUG_OBJ_DIR) --rc lcov_branch_coverage=1 --capture --output-file $(DEBUG_COV_DIR)cov.info
+	genhtml -o $(DEBUG_COV_DIR) --rc lcov_branch_coverage=1 $(DEBUG_COV_DIR)cov.info
 	@echo "See HTML coverage report at $(PWD)/$(DEBUG_COV_DIR)index.html"
