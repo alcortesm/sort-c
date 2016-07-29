@@ -919,10 +919,18 @@ fix tests[] = {
 };
 
 int test_sort_fn(sort_fn fn, const char* prefix) {
+    int err;
+
+    err = fn(NULL);
+    if (! err) {
+        printf("testing \"%s\": NULL test failed: no error was returned\n",
+               prefix);
+        return 1;
+    }
+
     int ntests = sizeof(tests) / sizeof(fix);
 
     int i;
-    int err;
     array *clone;
     for (i=0; i<ntests; i++) {
         clone = array_clone(&(tests[i].input));
