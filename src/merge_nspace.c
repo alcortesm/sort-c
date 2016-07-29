@@ -51,21 +51,21 @@ void merge(int* tmp, int* src, int b, int e) {
     int m = b + (e-b)/2;
     int* h1 = src+b;
     int* h2 = src+m;
-    int i = b;
+    int next = tmp+b;
     for (;;) {
         if (h1 >= src+m) {
-            memcpy(tmp+i, h2, (src+e-h2)*sizeof(int));
+            memcpy(next, h2, (src+e-h2)*sizeof(int));
             break;
         }
         if (h2 >= src+e) {
-            memcpy(tmp+i, h1, (src+m-h1)*sizeof(int));
+            memcpy(next, h1, (src+m-h1)*sizeof(int));
             break;
         }
         if (*h1 <= *h2) {
-            tmp[i++] = *h1;
+            *next++ = *h1;
             h1++;
         } else {
-            tmp[i++] = *h2;
+            *next++ = *h2;
             h2++;
         }
     }
