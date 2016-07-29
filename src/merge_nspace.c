@@ -3,31 +3,30 @@
 #include <string.h>
 
 #include "util.h"
+#include "array.h"
 
 void _sort_merge_nspace(int* dst, int* src, int f, int n);
 void merge(int* dst, int* src, int a, int b, int c, int d);
 
-int* sort_merge_nspace(int* src, int n) {
-    if (n==0) {
-        return NULL;
+int sort_merge_nspace(array* a) {
+    int sz = array_size(a);
+    if (sz<2) {
+        return 0;
     }
 
-    int* dst = (int*) malloc(n * sizeof(int));
+    int* dst = (int*) malloc(sz * sizeof(int));
     if (! dst) {
-        return NULL;
+        perror("malloc");
+        return 1;
     }
 
-    if (n==1) {
-        return memcpy(dst, src, sizeof(int));
-    }
+    _sort_merge_nspace(dst, a->a, 0, sz);
+    free(dst);
 
-    _sort_merge_nspace(dst, src, 0, n);
-    return dst;
+    return 0;
 }
 
 void _sort_merge_nspace(int* dst, int* src, int b, int e) {
-    printf("_sort_merge_nspace[%d:%d]\n", b, e);
-
     int sz = e-b;
     if (sz==1) {
         return;
@@ -35,22 +34,21 @@ void _sort_merge_nspace(int* dst, int* src, int b, int e) {
 
     _sort_merge_nspace(dst, src, b, b+sz/2);
     _sort_merge_nspace(dst, src, b+sz/2, e);
-    merge(dst, src, b, b+(sz/2), b+(sz/2), e);
+    merge(dst, src, b, b+sz/2, b+sz/2, e);
 }
 
 void merge(int* dst, int* src, int ab, int ae, int bb, int be) {
-    printf("merge [%d:%d] and [%d:%d]\n", ab, ae, bb, be);
     int* a = src+ab;
     int* b = src+bb;
-    int i = 0;
+    int i = ab;
     for (;;) {
         if (a >= src+ae) {
-            memcpy(dst+i, b, b-src+be);
-            return;
+            memcpy(dst+i, b, (src+be-b)*sizeof(int));
+            break;
         }
         if (b >= src+be) {
-            memcpy(dst+i, a, a-src+ae);
-            return;
+            memcpy(dst+i, a, (src+ae-a)*sizeof(int));
+            break;
         }
         if (*a <= *b) {
             dst[i++] = *a;
@@ -60,4 +58,5 @@ void merge(int* dst, int* src, int ab, int ae, int bb, int be) {
             b++;
         }
     }
+    memcpy(src+ab, dst+ab, (be-ab)*sizeof(int));
 }

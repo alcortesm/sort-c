@@ -19,7 +19,7 @@ int test_sort(const char* prefix) {
 
     struct named_test tests[] = {
         {"sort_bubble", &sort_bubble},
-    //    {"sort_merge_nspace", sort_merge_nspace},
+        {"sort_merge_nspace", sort_merge_nspace},
     };
     int ntests = sizeof(tests) / sizeof(struct named_test);
 
@@ -922,21 +922,33 @@ int test_sort_fn(sort_fn fn, const char* prefix) {
     int ntests = sizeof(tests) / sizeof(fix);
 
     int i;
+    int err;
     array *clone;
     for (i=0; i<ntests; i++) {
         clone = array_clone(&(tests[i].input));
         if (! clone) {
+            printf("testing \"%s\": test %d failed: cannot clone\n",
+                   prefix, i);
             return 1;
         }
 
-        fn(clone);
+        err = fn(clone);
+        if (err) {
+            printf("testing \"%s\": test %d failed: sort failed\n",
+                   prefix, i);
+            return 1;
+        }
 
         if (! array_equals(clone, &(tests[i].expected))) {
             printf("testing \"%s\": test %d failed:\n", prefix, i);
-            printf("\tresult and expected differ:\n");
+            printf("\tobtained and expected differ:\n");
 
             char* s = array_to_str(&(tests[i].input));
             printf("\t\t   input: %s\n", s);
+            free(s);
+
+            s = array_to_str(&(tests[i].expected));
+            printf("\t\texpected: %s\n", s);
             free(s);
 
             s = array_to_str(clone);

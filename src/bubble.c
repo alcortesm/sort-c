@@ -6,13 +6,13 @@ void swap(int*a, int i, int j) {
     a[j] = tmp;
 }
 
-void sort_bubble(array* a) {
+int sort_bubble(array* a) {
     if (! a) {
-        return;
+        return 1;
     }
 
     if (array_size(a) < 2) {
-        return;
+        return 0;
     }
 
     int limit;
@@ -35,5 +35,5 @@ void sort_bubble(array* a) {
         }
     }
 
-    return;
+    return 0;
 }
