@@ -14,7 +14,7 @@ int sort_merge_nspace(array* a) {
     }
 
     int sz = array_size(a);
-    if (sz<2) {
+    if (sz < 2) {
         return 0;
     }
 

@@ -11,13 +11,14 @@ int sort_bubble(array* a) {
         return 1;
     }
 
-    if (array_size(a) < 2) {
+    int sz = array_size(a);
+    if (sz < 2) {
         return 0;
     }
 
     int limit;
     int sorted_since;
-    for (limit=array_size(a); limit>1; limit--) {
+    for (limit=sz; limit>1; limit--) {
         sorted_since = -1;
         int i;
         for (i=1; i<limit; i++) {
