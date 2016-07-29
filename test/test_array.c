@@ -255,6 +255,15 @@ int test_array_new(const char* prefix) {
 }
 
 int test_array_to_str(const char* prefix) {
+    char* obtained;
+
+    obtained = array_to_str(NULL);
+    if (obtained) {
+        free(obtained);
+        printf("%s: NULL test failed\n", prefix);
+        return 1;
+    }
+
     typedef struct {
         array a;
         char* s;
@@ -269,7 +278,6 @@ int test_array_to_str(const char* prefix) {
     int ntests = sizeof(tests) / sizeof(fix);
 
     int i;
-    char* obtained;
     for (i=0; i<ntests; i++) {
         obtained = array_to_str(&(tests[i].a));
 
@@ -285,7 +293,7 @@ int test_array_to_str(const char* prefix) {
             printf("\tdifferent strings:\n");
             printf("\t\texpected: %s\n", tests[i].s);
             printf("\t\tobtained: %s\n", obtained);
-            return 1;
+            return 2;
         }
 
         free(obtained);
