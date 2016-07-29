@@ -47,27 +47,27 @@ void _sort_merge_nspace(int* tmp, int* src, int b, int e) {
 // into a temporal array, until both queues are empty.  Then the
 // contents of the temporal array are copied back into the original
 // array.
-void merge(int* tmp, int* src, int ab, int be) {
-    int m = ab + ((be-ab) / 2);
-    int* r1 = src+ab;
-    int* r2 = src+m;
-    int i = ab;
+void merge(int* tmp, int* src, int b, int e) {
+    int m = b + (e-b)/2;
+    int* h1 = src+b;
+    int* h2 = src+m;
+    int i = b;
     for (;;) {
-        if (r1 >= src+m) {
-            memcpy(tmp+i, r2, (src+be-r2)*sizeof(int));
+        if (h1 >= src+m) {
+            memcpy(tmp+i, h2, (src+e-h2)*sizeof(int));
             break;
         }
-        if (r2 >= src+be) {
-            memcpy(tmp+i, r1, (src+m-r1)*sizeof(int));
+        if (h2 >= src+e) {
+            memcpy(tmp+i, h1, (src+m-h1)*sizeof(int));
             break;
         }
-        if (*r1 <= *r2) {
-            tmp[i++] = *r1;
-            r1++;
+        if (*h1 <= *h2) {
+            tmp[i++] = *h1;
+            h1++;
         } else {
-            tmp[i++] = *r2;
-            r2++;
+            tmp[i++] = *h2;
+            h2++;
         }
     }
-    memcpy(src+ab, tmp+ab, (be-ab)*sizeof(int));
+    memcpy(src+b, tmp+b, (e-b)*sizeof(int));
 }
