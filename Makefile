@@ -3,6 +3,7 @@ SRC_FILES=util.c array.c bubble.c merge_nspace.c
 SRC_DIR=src/
 INC_DIR=include/
 TEST_DIR=test/
+BENCHMARK_DIR=benchmark/
 DEBUG_DIR=debug/
 
 OBJ_DIR=obj/
@@ -27,7 +28,7 @@ INCLUDE=-iquote $(INC_DIR)
 AR?=ar
 AFLAGS=-cvr
 
-.PHONY: clean nuke test valgrind
+.PHONY: clean nuke test benchmark valgrind
 
 $(LIB): $(OBJS) | $(LIB_DIR)
 	$(AR) $(AFLAGS) $@ $^
@@ -59,6 +60,9 @@ $(DEBUG_COV_DIR):
 test: $(DEBUG_LIB)
 	cd $(TEST_DIR) ; make test
 
+benchmark: $(LIB)
+	cd $(BENCHMARK_DIR) ; make benchmark
+
 valgrind: $(DEBUG_LIB)
 	cd $(TEST_DIR) ; make valgrind
 
@@ -67,6 +71,7 @@ clean:
 	rm -rf $(DEBUG_DIR)
 	rm -f *.gcov
 	cd $(TEST_DIR) ; make clean
+	cd $(BENCHMARK_DIR) ; make clean
 
 nuke: clean
 	rm -rf $(LIB_DIR)
