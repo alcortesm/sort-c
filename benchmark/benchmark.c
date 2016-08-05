@@ -41,11 +41,11 @@ int main(int argc, char** argv) {
 // results.
 void benchmark_algo(sort_fn* fn) {
     int lengths[] = {
-        10 * 1000,
-        20 * 1000,
-        30 * 1000,
-        40 * 1000,
-        50 * 1000,
+        1 * 1000,
+        2 * 1000,
+        3 * 1000,
+        4 * 1000,
+        5 * 1000,
     };
     int nlengths = sizeof(lengths) / sizeof(int);
 
@@ -61,7 +61,7 @@ void benchmark_algo(sort_fn* fn) {
 // function and return the mean value of the time it took to sort arrays
 // of such length.
 float benchmark_func(sort_fn* fn, int len) {
-    int nruns = 10;
+    int nruns = 100;
     int i;
     int err;
     array* a;
@@ -89,7 +89,7 @@ float benchmark_func(sort_fn* fn, int len) {
 
 void report(int len, float result) {
     float ms = result * 1000;
-    printf("\tbenchmark length = % 10d,\t\tresult = % 10.3f milliseconds\n",
+    printf("\tbenchmark length = % 10d,\t\tresult = % 7.3f milliseconds\n",
            len, ms);
 
     return;
