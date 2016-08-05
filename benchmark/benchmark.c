@@ -24,6 +24,7 @@ int main(int argc, char** argv) {
     struct named_algo algos[] = {
         {"bubble sort",          &sort_bubble},
         {"merge sort (n space)", &sort_merge_nspace},
+        {"quick sort",           &sort_quick},
     };
     int nalgos = sizeof(algos) / sizeof(struct named_algo);
 
