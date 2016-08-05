@@ -18,7 +18,7 @@ int sort_merge_nspace(array* a) {
         return 0;
     }
 
-    int* tmp = (int*) malloc(sz * sizeof(int));
+    int* tmp = malloc(sz * sizeof(int));
     if (! tmp) {
         perror("malloc");
         return 1;

@@ -54,7 +54,7 @@ char* comment(const char* str, int num) {
     char* format = "%s, test number %d:";
     int n = snprintf(NULL, 0, format, str, num);
 
-    char* s = (char*) malloc((1+n) * sizeof(char));
+    char* s = malloc((1+n) * sizeof(char));
     if (! s) {
         return NULL;
     }

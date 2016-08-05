@@ -32,7 +32,7 @@ char* strjoin(const char* src, const char* format, ...) {
         srclen = strlen(src);
     }
 
-    char* ret = (char*) malloc(srclen + argslen + 1);
+    char* ret = malloc(srclen + argslen + 1);
     if (!ret) {
         return NULL;
     }

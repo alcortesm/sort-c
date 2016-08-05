@@ -13,7 +13,7 @@ array* array_new(int* a, int n) {
         return NULL;
     }
 
-    array* new = (array*) malloc(sizeof(array));
+    array* new = malloc(sizeof(array));
     if (! new) {
         return NULL;
     }
@@ -24,7 +24,7 @@ array* array_new(int* a, int n) {
         return new;
     }
 
-    new->a = (int*) malloc(n*sizeof(int));
+    new->a = malloc(n*sizeof(int));
     if (! new->a) {
         free(new);
         return NULL;
