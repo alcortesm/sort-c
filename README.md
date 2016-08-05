@@ -10,13 +10,16 @@ Compile the benchmarking suite and run it:
 ;
 ; ./benchmark/benchmarkall
 Benchmarks for "bubble sort":
-        benchmark length =       1000,          result =   0.00 seg
-        benchmark length =      10000,          result =   0.12 seg
-        benchmark length =     100000,          result =  17.07 seg
+        benchmark length =      10000,          result =   120.631 milliseconds
+        benchmark length =      20000,          result =   591.226 milliseconds
+        benchmark length =      30000,          result =  1428.283 milliseconds
+        benchmark length =      40000,          result =  2649.561 milliseconds
+        benchmark length =      50000,          result =  4196.430 milliseconds
 Benchmarks for "merge sort (n space)":
-        benchmark length =       1000,          result =   0.00 seg
-        benchmark length =      10000,          result =   0.00 seg
-        benchmark length =     100000,          result =   0.01 seg
-make[1]: Leaving directory '/home/alberto/room/src/cspace/sort-c/benchmark'
+        benchmark length =      10000,          result =     0.837 milliseconds
+        benchmark length =      20000,          result =     1.841 milliseconds
+        benchmark length =      30000,          result =     2.843 milliseconds
+        benchmark length =      40000,          result =     3.836 milliseconds
+        benchmark length =      50000,          result =     4.855 milliseconds
 ```
 
