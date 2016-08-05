@@ -1,6 +1,7 @@
 lib/
 *.o
 test/testall
+benchmark/benchmarkall
 *.gcda
 *.gcno
 *.gcov

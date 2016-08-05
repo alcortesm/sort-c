@@ -14,9 +14,9 @@ int main(int argc, char** argv) {
     };
 
     struct named_test tests[] = {
-        {&test_util, "test_util"},
+        {&test_util,  "test_util"},
         {&test_array, "test_array"},
-        {&test_sort, "test_sort"},
+        {&test_sort,  "test_sort"},
     };
     int ntests = sizeof(tests) / sizeof(struct named_test);
 

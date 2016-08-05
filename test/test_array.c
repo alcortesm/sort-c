@@ -11,6 +11,7 @@ test_fn test_array_new;
 test_fn test_array_to_str;
 test_fn test_array_equals;
 test_fn test_array_clone;
+test_fn test_array_random;
 
 int test_array(const char* prefix) {
     struct named_test {
@@ -23,6 +24,7 @@ int test_array(const char* prefix) {
         {&test_array_to_str, "test_array_to_str"},
         {&test_array_equals, "test_array_equals"},
         {&test_array_clone, "test_array_clone"},
+        {&test_array_random, "test_array_random"},
     };
     int ntests = sizeof(tests) / sizeof(struct named_test);
 
@@ -447,6 +449,41 @@ int test_array_clone(const char* prefix) {
         }
 
         array_free(obtained);
+    }
+
+    return 0;
+}
+
+int test_array_random(const char* prefix) {
+    int expected[] = {
+        0,
+        1,
+        10,
+        100,
+    };
+    int nexpected = sizeof(expected) / sizeof(int);
+
+    int i;
+    int obtained;
+    char* s;
+    for (i=0; i<nexpected; i++) {
+        s = comment(prefix, i);
+        if (! s) {
+            perror("comment");
+            exit(1);
+        }
+
+        array* a = array_random(expected[i]);
+        obtained = array_size(a);
+        array_free(a);
+        if (obtained != expected[i]) {
+            printf("%s failed: expected size = %d, obtained = %d\n",
+                   s, expected[i], obtained);
+            free(s);
+            return 1;
+        }
+
+        free(s);
     }
 
     return 0;
