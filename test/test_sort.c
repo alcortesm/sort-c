@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include <util.h>
-#include <array.h>
 #include <sort.h>
 
 int test_sort_fn(sort_fn fn, const char* prefix);

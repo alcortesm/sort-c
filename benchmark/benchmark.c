@@ -3,7 +3,6 @@
 #include <time.h>
 
 #include <util.h>
-#include <array.h>
 #include <sort.h>
 
 void  benchmark_algo(sort_fn* fn);
