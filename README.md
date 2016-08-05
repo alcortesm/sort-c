@@ -10,16 +10,16 @@ Compile the benchmarking suite and run it:
 ;
 ; ./benchmark/benchmarkall
 Benchmarks for "bubble sort":
-        benchmark length =      10000,          result =   120.631 milliseconds
-        benchmark length =      20000,          result =   591.226 milliseconds
-        benchmark length =      30000,          result =  1428.283 milliseconds
-        benchmark length =      40000,          result =  2649.561 milliseconds
-        benchmark length =      50000,          result =  4196.430 milliseconds
+	benchmark length =   1000,		result =   0.763 milliseconds
+	benchmark length =   2000,		result =   2.857 milliseconds
+	benchmark length =   3000,		result =   6.590 milliseconds
+	benchmark length =   4000,		result =  12.460 milliseconds
+	benchmark length =   5000,		result =  21.172 milliseconds
 Benchmarks for "merge sort (n space)":
-        benchmark length =      10000,          result =     0.837 milliseconds
-        benchmark length =      20000,          result =     1.841 milliseconds
-        benchmark length =      30000,          result =     2.843 milliseconds
-        benchmark length =      40000,          result =     3.836 milliseconds
-        benchmark length =      50000,          result =     4.855 milliseconds
+	benchmark length =   1000,		result =   0.067 milliseconds
+	benchmark length =   2000,		result =   0.147 milliseconds
+	benchmark length =   3000,		result =   0.224 milliseconds
+	benchmark length =   4000,		result =   0.302 milliseconds
+	benchmark length =   5000,		result =   0.385 milliseconds
 ```
 

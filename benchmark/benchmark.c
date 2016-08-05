@@ -89,7 +89,7 @@ float benchmark_func(sort_fn* fn, int len) {
 
 void report(int len, float result) {
     float ms = result * 1000;
-    printf("\tbenchmark length = % 10d,\t\tresult = % 7.3f milliseconds\n",
+    printf("\tbenchmark length = % 6d,\t\tresult = % 7.3f milliseconds\n",
            len, ms);
 
     return;
