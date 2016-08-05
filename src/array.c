@@ -39,6 +39,23 @@ array* array_clone(array* a) {
     return array_new(a->a, a->n);
 }
 
+array* array_random(int len) {
+    int* r = malloc(len * sizeof(int));
+    if (!r) {
+        return NULL;
+    }
+
+    int i;
+    for (i=0; i<len; i++) {
+        r[i] = rand();
+    }
+
+    array* a = array_new(r, len);
+    free(r);
+
+    return a;
+}
+
 void array_free(array* a) {
     if (a->a) {
         free(a->a);

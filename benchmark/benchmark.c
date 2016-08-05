@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #include <util.h>
 #include <array.h>
@@ -12,6 +13,9 @@ void  report(int len, float result);
 int main(int argc, char** argv) {
     UNUSED(argc);
     UNUSED(argv);
+
+    time_t seed = time(NULL);
+    srand(seed);
 
     struct named_algo {
         const char* name;
@@ -26,7 +30,7 @@ int main(int argc, char** argv) {
 
     int i;
     for (i = 0; i < nalgos; i++) {
-        printf("Benchmark for \"%s\":\n", algos[i].name);
+        printf("Benchmarks for \"%s\":\n", algos[i].name);
         benchmark_algo(algos[i].fn);
     }
 
@@ -52,12 +56,33 @@ void benchmark_algo(sort_fn* fn) {
 }
 
 // runs several benchmarks for a given array length and a given sorting
-// function and return the mean value to sort them.
+// function and return the mean value of the time it took to sort arrays
+// of such length.
 float benchmark_func(sort_fn* fn, int len) {
-    UNUSED(fn);
-    UNUSED(len);
+    int nruns = 2;
+    int i;
+    int err;
+    array* a;
+    clock_t start, end;
+    double elapsed;
+    double total = 0;
+    for (i=0; i<nruns; i++) {
+        a = array_random(len);
 
-    return 0.0;
+        start = clock();
+        err = fn(a);
+        end = clock();
+        elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        total += elapsed;
+
+        if (err) {
+            fprintf(stderr, "sort failed");
+            return -1.0;
+        }
+        array_free(a);
+    }
+
+    return total / nruns;
 }
 
 void report(int len, float result) {
