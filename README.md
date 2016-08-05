@@ -5,7 +5,7 @@
 Compile the benchmarking suite and run it:
 
 ```
-; make benchmark 
+; make benchmark
 mkdir obj/
 cc -c -Wall -Wextra -Wpedantic -Werror -std=c99 -O3 -iquote include/ -o obj/util.o src/util.c
 cc -c -Wall -Wextra -Wpedantic -Werror -std=c99 -O3 -iquote include/ -o obj/array.o src/array.c
