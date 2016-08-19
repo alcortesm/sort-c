@@ -45,10 +45,6 @@ int choose_pivot(array* a, int b, int e) {
 
 int partition(array* a, int l, int r, int p) {
     for (;l != r ;) {
-        if (l == p) {
-            l++;
-            continue;
-        }
         if (a->a[l] <= a->a[p]) {
             l++;
             continue;
