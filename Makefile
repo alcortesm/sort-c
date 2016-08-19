@@ -1,5 +1,5 @@
 LIB_NAME=sort
-SRC_FILES=util.c array.c bubble.c merge_nspace.c
+SRC_FILES=util.c array.c bubble.c merge_nspace.c quick.c
 SRC_DIR=src/
 INC_DIR=include/
 TEST_DIR=test/
