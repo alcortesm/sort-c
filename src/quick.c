@@ -44,7 +44,6 @@ int choose_pivot(array* a, int b, int e) {
 }
 
 int partition(array* a, int l, int r, int p) {
-    int tmp;
     for (;l != r ;) {
         if (l == p) {
             l++;
@@ -62,16 +61,10 @@ int partition(array* a, int l, int r, int p) {
             r--;
             continue;
         }
-        // swap l and r
-        tmp = a->a[l];
-        a->a[l] = a->a[r];
-        a->a[r] = tmp;
+        array_swap(a, l, r);
     }
 
-    // swap l with p
-    tmp = a->a[l];
-    a->a[l] = a->a[p];
-    a->a[p] = tmp;
+    array_swap(a, l, p);
 
     return l;
 }

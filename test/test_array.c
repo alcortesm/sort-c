@@ -12,6 +12,7 @@ test_fn test_array_to_str;
 test_fn test_array_equals;
 test_fn test_array_clone;
 test_fn test_array_random;
+test_fn test_array_swap;
 
 int test_array(const char* prefix) {
     struct named_test {
@@ -25,6 +26,7 @@ int test_array(const char* prefix) {
         {&test_array_equals, "test_array_equals"},
         {&test_array_clone, "test_array_clone"},
         {&test_array_random, "test_array_random"},
+        {&test_array_swap, "test_array_swap"},
     };
     int ntests = sizeof(tests) / sizeof(struct named_test);
 
@@ -484,6 +486,64 @@ int test_array_random(const char* prefix) {
         }
 
         free(s);
+    }
+
+    return 0;
+}
+
+int test_array_swap(const char* prefix) {
+    typedef struct {
+        array input;
+        int i;
+        int j;
+        array expected;
+    } fix;
+
+    fix tests[] = {
+        {{(int[]){0}, 1}, 0, 0, {(int[]){0}, 1}},
+        {{(int[]){0, 1}, 2}, 0, 0, {(int[]){0, 1}, 2}},
+        {{(int[]){0, 1}, 2}, 0, 1, {(int[]){1, 0}, 2}},
+        {{(int[]){0, 1}, 2}, 1, 0, {(int[]){1, 0}, 2}},
+        {{(int[]){0, 1}, 2}, 1, 1, {(int[]){0, 1}, 2}},
+        {{(int[]){0, 1, 2}, 3}, 0, 0, {(int[]){0, 1, 2}, 3}},
+        {{(int[]){0, 1, 2}, 3}, 0, 1, {(int[]){1, 0, 2}, 3}},
+        {{(int[]){0, 1, 2}, 3}, 0, 2, {(int[]){2, 1, 0}, 3}},
+        {{(int[]){0, 1, 2}, 3}, 1, 0, {(int[]){1, 0, 2}, 3}},
+        {{(int[]){0, 1, 2}, 3}, 1, 1, {(int[]){0, 1, 2}, 3}},
+        {{(int[]){0, 1, 2}, 3}, 1, 2, {(int[]){0, 2, 1}, 3}},
+        {{(int[]){0, 1, 2}, 3}, 2, 0, {(int[]){2, 1, 0}, 3}},
+        {{(int[]){0, 1, 2}, 3}, 2, 1, {(int[]){0, 2, 1}, 3}},
+        {{(int[]){0, 1, 2}, 3}, 2, 2, {(int[]){0, 1, 2}, 3}},
+    };
+    int ntests = sizeof(tests) / sizeof(fix);
+
+    int t;
+    array* obtained;
+    for (t=0; t<ntests; t++) {
+        obtained = array_clone(&(tests[t].input));
+        array_swap(obtained, tests[t].i, tests[t].j);
+
+        if (! array_equals(obtained, &(tests[t].expected))) {
+            char* s = comment(prefix, t);
+            if (! s) {
+                perror("comment");
+                exit(1);
+            }
+            printf("%s fail\n", s);
+            free(s);
+
+            s = array_to_str(&(tests[t].expected));
+            printf("\t\texpected: %s\n", s);
+            free(s);
+
+            s = array_to_str(obtained);
+            printf("\t\tobtained: %s\n", s);
+            free(s);
+
+            return 1;
+        }
+
+        array_free(obtained);
     }
 
     return 0;

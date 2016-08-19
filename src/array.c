@@ -89,3 +89,9 @@ int array_equals(array* a, array* b) {
 
     return 1;
 }
+
+void array_swap(array* a, int i, int j) {
+    int tmp = a->a[i];
+    a->a[i] = a->a[j];
+    a->a[j] = tmp;
+}

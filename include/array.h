@@ -13,5 +13,6 @@ void   array_free(array*);
 int    array_size(array*);
 char*  array_to_str(array*);
 int    array_equals(array*, array*);
+void   array_swap(array*, int i, int j);
 
 #endif /* ARRAY_H */
