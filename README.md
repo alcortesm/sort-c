@@ -7,19 +7,20 @@ Compile the benchmarking suite and run it:
 ```
 ; make benchmark
 ...
-;
-; ./benchmark/benchmarkall
-Benchmarks for "bubble sort":
-	benchmark length =   1000,		result =   0.763 milliseconds
-	benchmark length =   2000,		result =   2.857 milliseconds
-	benchmark length =   3000,		result =   6.590 milliseconds
-	benchmark length =   4000,		result =  12.460 milliseconds
-	benchmark length =   5000,		result =  21.172 milliseconds
+./benchmarkall
 Benchmarks for "merge sort (n space)":
-	benchmark length =   1000,		result =   0.067 milliseconds
-	benchmark length =   2000,		result =   0.147 milliseconds
-	benchmark length =   3000,		result =   0.224 milliseconds
-	benchmark length =   4000,		result =   0.302 milliseconds
-	benchmark length =   5000,		result =   0.385 milliseconds
+        array length =  100000, runs = 100,     mean =   9.900 milliseconds
+        array length =  200000, runs = 100,     mean =  20.696 milliseconds
+        array length =  300000, runs = 100,     mean =  32.377 milliseconds
+        array length =  400000, runs = 100,     mean =  44.070 milliseconds
+        array length =  500000, runs = 100,     mean =  56.250 milliseconds
+Benchmarks for "quick sort":
+        array length =  100000, runs = 100,     mean =   9.643 milliseconds
+        array length =  200000, runs = 100,     mean =  20.426 milliseconds
+        array length =  300000, runs = 100,     mean =  31.753 milliseconds
+        array length =  400000, runs = 100,     mean =  43.367 milliseconds
+        array length =  500000, runs = 100,     mean =  55.333 milliseconds
+...
 ```
+
 
