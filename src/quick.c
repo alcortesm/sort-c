@@ -30,6 +30,13 @@ void quick(array* a, int b, int e) {
         return;
     }
 
+    if (sz == 2) {
+        if (a->a[0] > a->a[1]) {
+            array_swap(a, 0, 1);
+            return;
+        }
+    }
+
     int p = choose_pivot(a, b, e);
     p = partition(a, b, e, p);
     quick(a, b, p-1);
@@ -37,20 +44,15 @@ void quick(array* a, int b, int e) {
 }
 
 int choose_pivot(array* a, int b, int e) {
-    // simple implementation
     UNUSED(a);
     UNUSED(b);
     return e;
 }
 
 int partition(array* a, int l, int r, int p) {
-    for (;l != r ;) {
+    while (l != r) {
         if (a->a[l] <= a->a[p]) {
             l++;
-            continue;
-        }
-        if (r == p) {
-            r--;
             continue;
         }
         if (a->a[r] >= a->a[p]) {
