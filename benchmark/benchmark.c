@@ -6,8 +6,8 @@
 #include <sort.h>
 
 void  benchmark_algo(sort_fn* fn);
-float benchmark_func(sort_fn* fn, int len);
-void  report(int len, float result);
+float benchmark_func(sort_fn* fn, int len, int nruns);
+void  report(int len, int nruns, float result);
 
 int main(int argc, char** argv) {
     UNUSED(argc);
@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
 // benchmark a sorting function using several array sizes and prints the
 // results.
 void benchmark_algo(sort_fn* fn) {
+    int nruns = 10;
     int lengths[] = {
         1 * 1000,
         2 * 1000,
@@ -52,16 +53,15 @@ void benchmark_algo(sort_fn* fn) {
     int i;
     float result;
     for (i = 0; i < nlengths; i++) {
-        result = benchmark_func(fn, lengths[i]);
-        report(lengths[i], result);
+        result = benchmark_func(fn, lengths[i], nruns);
+        report(lengths[i], nruns, result);
     }
 }
 
 // runs several benchmarks for a given array length and a given sorting
 // function and return the mean value of the time it took to sort arrays
 // of such length.
-float benchmark_func(sort_fn* fn, int len) {
-    int nruns = 100;
+float benchmark_func(sort_fn* fn, int len, int nruns) {
     int i;
     int err;
     array* a;
@@ -87,10 +87,10 @@ float benchmark_func(sort_fn* fn, int len) {
     return total / nruns;
 }
 
-void report(int len, float result) {
+void report(int len, int nruns, float result) {
     float ms = result * 1000;
-    printf("\tbenchmark length = % 6d,\t\tresult = % 7.3f milliseconds\n",
-           len, ms);
+    printf("\tarray length = % 6d,\truns = %d,\tmean = % 7.3f milliseconds\n",
+           len, nruns, ms);
 
     return;
 }
