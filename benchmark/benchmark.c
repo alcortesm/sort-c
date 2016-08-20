@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     };
 
     struct named_algo algos[] = {
-        {"bubble sort",          &sort_bubble},
+        //{"bubble sort",          &sort_bubble},
         {"merge sort (n space)", &sort_merge_nspace},
         {"quick sort",           &sort_quick},
     };
@@ -42,20 +42,19 @@ int main(int argc, char** argv) {
 void benchmark_algo(sort_fn* fn) {
     int nruns = 100;
     int lengths[] = {
-        1 * 1000,
-        2 * 1000,
-        3 * 1000,
-        4 * 1000,
-        5 * 1000,
+        1 * 100000,
+        2 * 100000,
+        3 * 100000,
+        4 * 100000,
+        5 * 100000,
     };
     int nlengths = sizeof(lengths) / sizeof(int);
 
     int i;
     float result;
     for (i = 0; i < nlengths; i++) {
-        int fixed_nruns = (fn == &sort_bubble) ? 10 : nruns;
-        result = benchmark_func(fn, lengths[i], fixed_nruns);
-        report(lengths[i], fixed_nruns, result);
+        result = benchmark_func(fn, lengths[i], nruns);
+        report(lengths[i], nruns, result);
     }
 }
 
