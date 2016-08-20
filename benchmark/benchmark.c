@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 // benchmark a sorting function using several array sizes and prints the
 // results.
 void benchmark_algo(sort_fn* fn) {
-    int nruns = 10;
+    int nruns = 100;
     int lengths[] = {
         1 * 1000,
         2 * 1000,
@@ -53,8 +53,9 @@ void benchmark_algo(sort_fn* fn) {
     int i;
     float result;
     for (i = 0; i < nlengths; i++) {
-        result = benchmark_func(fn, lengths[i], nruns);
-        report(lengths[i], nruns, result);
+        int fixed_nruns = (fn == &sort_bubble) ? 10 : nruns;
+        result = benchmark_func(fn, lengths[i], fixed_nruns);
+        report(lengths[i], fixed_nruns, result);
     }
 }
 
