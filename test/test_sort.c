@@ -20,6 +20,7 @@ int test_sort(const char* prefix) {
         {"sort_bubble", &sort_bubble},
         {"sort_merge_nspace", sort_merge_nspace},
         {"sort_quick", sort_quick},
+        {"sort_heap", sort_heap},
     };
     int ntests = sizeof(tests) / sizeof(struct named_test);
 
