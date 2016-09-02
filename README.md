@@ -20,6 +20,12 @@ Benchmarks for "quick sort":
         array length =  300000, runs = 100,     mean =  31.753 milliseconds
         array length =  400000, runs = 100,     mean =  43.367 milliseconds
         array length =  500000, runs = 100,     mean =  55.333 milliseconds
+Benchmarks for "heapsort":
+        array length =  100000, runs = 100,     mean =  13.955 milliseconds
+        array length =  200000, runs = 100,     mean =  30.515 milliseconds
+        array length =  300000, runs = 100,     mean =  48.263 milliseconds
+        array length =  400000, runs = 100,     mean =  66.457 milliseconds
+        array length =  500000, runs = 100,     mean =  85.419 milliseconds
 ...
 ```
 
